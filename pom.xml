@@ -1,0 +1,95 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- MAVEN ARTIFACT INFORMATION -->
+  <groupId>com.ruddlesdin</groupId>
+  <artifactId>rpicloud</artifactId>
+  <version>1.2-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>rpicloud</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <pi4j.version>1.2-SNAPSHOT</pi4j.version>
+    <compiler-plugin.version>3.1</compiler-plugin.version>
+    <assembly-plugin.version>2.4</assembly-plugin.version>
+  </properties>
+
+  <!-- REPOSITORIES -->
+  <repositories>
+     <repository>
+        <id>oss-snapshots-repo</id>
+        <name>Sonatype OSS Maven Repository</name>
+        <url>https://oss.sonatype.org/content/groups/public</url>
+        <snapshots>
+          <enabled>true</enabled>
+          <updatePolicy>always</updatePolicy>
+        </snapshots>
+     </repository>
+  </repositories>
+
+  <!-- DEPENDENCIES -->
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.pi4j</groupId>
+      <artifactId>pi4j-core</artifactId>
+      <version>${pi4j.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-native</artifactId>
+          </exclusion>
+        </exclusions>
+    </dependency>
+  </dependencies>
+
+  <!-- BUILD INSTRUCTIONS -->
+  <build>
+    <plugins>
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${compiler-plugin.version}</version>
+          <configuration>
+              <source>1.8</source>
+              <target>1.8</target>
+          </configuration>
+      </plugin>
+        <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>${assembly-plugin.version}</version>
+            <executions>
+                <execution>
+                    <id>jar-with-dependencies</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                    <configuration>
+                        <descriptorRefs>
+                            <descriptorRef>
+                                jar-with-dependencies
+                            </descriptorRef>
+                        </descriptorRefs>
+                        <archive>
+                            <manifest>
+                                <mainClass>
+                                    com.ruddlesdin.Main
+                                </mainClass>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+  </build>
+</project>
